@@ -2,10 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 
+const EmployeeRoute = require("./routes/employee");
+
 // MongoDB Connection
 mongoose.connect("mongodb://localhost:27017/testdb", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useFindAndModify: true
 });
 const db = mongoose.connection;
 
@@ -24,6 +27,12 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Set static folder for file upload
+app.use("/uploads", express.static("uploads"));
+
+// Route
+app.use("/api/employee", EmployeeRoute);
 
 // Port
 const PORT = process.env.PORT || 5000;
