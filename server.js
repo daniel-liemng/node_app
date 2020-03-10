@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 
 const EmployeeRoute = require("./routes/employee");
+const AuthRoute = require("./routes/auth");
 
 // MongoDB Connection
 mongoose.connect("mongodb://localhost:27017/testdb", {
@@ -33,6 +34,7 @@ app.use("/uploads", express.static("uploads"));
 
 // Route
 app.use("/api/employee", EmployeeRoute);
+app.use("/api", AuthRoute);
 
 // Port
 const PORT = process.env.PORT || 5000;
